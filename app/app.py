@@ -1,9 +1,14 @@
 # app/app.py
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, redirect, url_for
 from app.services import TodoService
 
 app = Flask(__name__)
 service = TodoService()
+
+@app.route("/")
+def index():
+    # Redirect root to the tasks listing to avoid 404 on "/"
+    return redirect(url_for("get_tasks"))
 
 @app.route("/tasks", methods=["GET"])
 def get_tasks():
